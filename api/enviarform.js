@@ -1,54 +1,78 @@
 // /api/enviarform.js
 
-// Importamos la instancia de la base de datos que ya configuramos.
 import { db } from '../lib/firebaseAdmin';
 
-// Esta es la función principal que Vercel ejecutará.
 export default async function handler(req, res) {
-  // --- ANÁLISIS DE ROBUSTEZ 1: Verificar el Método HTTP ---
-  // Solo debemos permitir peticiones de tipo POST. Si es GET, DELETE, etc., la rechazamos.
+  // 1. Aseguramos que solo se acepten peticiones POST
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST']);
     return res.status(405).json({ error: `Método ${req.method} no permitido.` });
   }
 
   try {
-    // --- ANÁLISIS DE ROBUSTEZ 2: Validación de Datos del Lado del Servidor ---
-    // Un punto no negociable. NUNCA confíes en la validación del frontend.
-    // El servidor debe verificar que los datos esenciales están presentes.
-    const { nombre, cedula, email, telefono, ciudad, departamento, descripcion, experiencia } = req.body;
-
-    if (!nombre || !cedula || !email || !telefono) {
-      return res.status(400).json({ error: 'Los campos nombre, cédula, email y teléfono son obligatorios.' });
-    }
-    
-    // Preparamos el objeto que se guardará en la base de datos.
-    const nuevoTallerista = {
-      nombre,
-      cedula,
+    // 2. Extraemos todos los campos del cuerpo de la solicitud
+    const {
+      nombres,
+      apellidos,
+      tipo_documento,
+      numero_documento,
       email,
       telefono,
-      ciudad: ciudad || '', // Aseguramos que no haya valores 'undefined'
-      departamento: departamento || '',
-      descripcion: descripcion || '',
-      experiencia: experiencia || '',
-      // Añadimos una marca de tiempo del servidor, que es más fiable que la del cliente.
-      fechaDeRegistro: new Date(),
+      departamento,
+      municipio,
+      direccion,
+      perfil,
+      titulo_profesional,
+      posgrado,
+      experiencia_general,
+      experiencia_especifica,
+      experiencia_tecnologica,
+      metodologias,
+      proyecto_relevante,
+      cv, // Este es el nombre del archivo adjunto
+      accept_policy
+    } = req.body;
+
+    // 3. Validación robusta en el servidor de los campos críticos
+    if (!nombres || !apellidos || !numero_documento || !email || !telefono || !departamento || !municipio || !direccion || !perfil || !cv || cv === 'No adjuntado' || accept_policy !== 'on') {
+      return res.status(400).json({ error: 'Faltan campos obligatorios. Por favor, complete toda la información requerida.' });
+    }
+
+    // 4. Preparamos el objeto completo que se guardará en Firestore
+    const nuevoTallerista = {
+      nombres,
+      apellidos,
+      nombreCompleto: `${nombres} ${apellidos}`, // Unimos para facilitar búsquedas futuras
+      tipo_documento,
+      numero_documento,
+      email,
+      telefono,
+      departamento,
+      municipio,
+      direccion,
+      perfil,
+      titulo_profesional: titulo_profesional || 'No especificado',
+      posgrado: posgrado || 'No especificado',
+      experiencia_general: experiencia_general || 'No especificado',
+      experiencia_especifica: experiencia_especifica || 'No especificado',
+      experiencia_tecnologica: experiencia_tecnologica || 'No especificado',
+      metodologias: metodologias || 'No especificado',
+      proyecto_relevante: proyecto_relevante || '', // Aseguramos que no sea undefined
+      nombre_cv: cv, // Guardamos el nombre del archivo
+      politica_aceptada: accept_policy === 'on',
+      fechaDeRegistro: new Date(), // Usamos la fecha del servidor, más confiable
     };
 
-    // --- Interacción con la Base de Datos ---
-    // Usamos .collection() para apuntar a 'talleristas' y .add() para insertar
-    // un nuevo documento con un ID autogenerado.
+    // 5. Insertamos el nuevo documento en la colección 'talleristas'
     const docRef = await db.collection('talleristas').add(nuevoTallerista);
 
-    // Si todo sale bien, respondemos con un éxito (201 Created) y el ID del nuevo documento.
+    // 6. Respondemos con éxito
     return res.status(201).json({ success: true, id: docRef.id });
 
   } catch (error) {
-    // --- ANÁLISIS DE ROBUSTEZ 3: Manejo de Errores Inesperados ---
-    // Si algo falla (ej. la base de datos está caída), capturamos el error
-    // y enviamos una respuesta genérica para no exponer detalles internos.
-    console.error('Error al guardar en Firestore:', error);
-    return res.status(500).json({ error: 'Ocurrió un error en el servidor.' });
+    // 7. Manejo de errores inesperados
+    console.error('Error crítico al guardar en Firestore:', error);
+    return res.status(500).json({ error: 'Ocurrió un error en el servidor. Por favor, contacte al administrador.' });
   }
 }
+
