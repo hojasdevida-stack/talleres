@@ -1,6 +1,7 @@
 // /api/enviarform.js
 
-import { db } from '../lib/firebaseAdmin';
+// CORRECCIÓN: Se añade la extensión .js al final de la ruta de importación.
+import { db } from '../lib/firebaseAdmin.js';
 
 export default async function handler(req, res) {
   // 1. Aseguramos que solo se acepten peticiones POST
