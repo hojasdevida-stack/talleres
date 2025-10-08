@@ -4,25 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Inscripción para Talleristas</title>
-    <!-- Tailwind CSS para un diseño moderno y responsivo -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Estilo para el indicador de carga */
-        .loader {
-            border-top-color: #3498db;
-            -webkit-animation: spinner 1.5s linear infinite;
-            animation: spinner 1.5s linear infinite;
-        }
-
-        @-webkit-keyframes spinner {
-            0% { -webkit-transform: rotate(0deg); }
-            100% { -webkit-transform: rotate(360deg); }
-        }
-
-        @keyframes spinner {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        .loader { border-top-color: #3498db; -webkit-animation: spinner 1.5s linear infinite; animation: spinner 1.5s linear infinite; }
+        @-webkit-keyframes spinner { 0% { -webkit-transform: rotate(0deg); } 100% { -webkit-transform: rotate(360deg); } }
+        @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
@@ -30,7 +16,6 @@
     <div class="container mx-auto p-4 md:p-8 max-w-4xl">
         <div class="bg-white rounded-lg shadow-xl p-6 md:p-10">
             
-            <!-- Encabezado del Formulario -->
             <div class="text-center mb-8">
                 <h1 class="text-2xl md:text-3xl font-bold text-gray-800">Convocatoria de Talleristas</h1>
                 <p class="text-gray-600 mt-2">Proyecto de Emprendimiento Digital (INNPULSA - Fundación I+D+I)</p>
@@ -38,12 +23,12 @@
             </div>
 
             <p class="text-gray-700 mb-8 text-center">
-                Este formulario busca recolectar la información de profesionales interesados en participar como Talleristas (Senior o Junior). Por favor, diligencie todos los campos con información veraz y actualizada.
+                Este formulario busca recolectar la información de profesionales interesados en participar como Talleristas. Por favor, diligencie todos los campos con información veraz y actualizada.
             </p>
 
             <form id="inscripcionForm" novalidate>
                 
-                <!-- 1. Información Personal -->
+                <!-- Campos 1 a 4 (sin cambios) -->
                 <fieldset class="mb-8">
                     <legend class="text-xl font-semibold text-gray-700 border-b-2 border-blue-200 pb-2 mb-6 w-full">1. Información Personal</legend>
                     <div class="grid md:grid-cols-2 gap-6">
@@ -76,8 +61,6 @@
                         </div>
                     </div>
                 </fieldset>
-
-                <!-- 2. Ubicación y Residencia -->
                 <fieldset class="mb-8">
                     <legend class="text-xl font-semibold text-gray-700 border-b-2 border-blue-200 pb-2 mb-6 w-full">2. Ubicación y Residencia</legend>
                     <div class="grid md:grid-cols-2 gap-6">
@@ -99,8 +82,6 @@
                         </div>
                     </div>
                 </fieldset>
-
-                <!-- 3. Perfil Profesional -->
                 <fieldset class="mb-8">
                     <legend class="text-xl font-semibold text-gray-700 border-b-2 border-blue-200 pb-2 mb-6 w-full">3. Perfil Profesional</legend>
                        <div class="mb-6">
@@ -117,11 +98,8 @@
                             </div>
                         </div>
                 </fieldset>
-
-                <!-- 4. Preguntas de Validación -->
                 <fieldset class="mb-8">
                     <legend class="text-xl font-semibold text-gray-700 border-b-2 border-blue-200 pb-2 mb-6 w-full">4. Validación de Perfil</legend>
-                    
                     <div class="mb-6">
                         <p class="block text-gray-700 font-medium mb-2">¿Cuenta con un título profesional en áreas de administración, ingenierías, economía, diseño o afines?</p>
                         <div>
@@ -129,7 +107,6 @@
                             <label class="inline-flex items-center"><input type="radio" name="titulo_profesional" value="no" class="form-radio text-blue-600 h-5 w-5"><span class="ml-2">No</span></label>
                         </div>
                     </div>
-
                     <div class="mb-6">
                         <p class="block text-gray-700 font-medium mb-2">¿Posee un título de posgrado (especialización, maestría o doctorado)? <span class="text-sm font-normal text-gray-500">(Deseable para perfil Senior)</span></p>
                         <div>
@@ -137,7 +114,6 @@
                             <label class="inline-flex items-center"><input type="radio" name="posgrado" value="no" class="form-radio text-blue-600 h-5 w-5"><span class="ml-2">No</span></label>
                         </div>
                     </div>
-                        
                     <div class="mb-6">
                         <label for="experiencia_general" class="block text-gray-700 font-medium mb-2">Años de experiencia profesional general certificable:</label>
                         <select id="experiencia_general" name="experiencia_general" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
@@ -147,7 +123,6 @@
                             <option value=">8">8 años o más (Cumple requisito Senior)</option>
                         </select>
                     </div>
-                    
                     <div class="mb-6">
                         <label for="experiencia_especifica" class="block text-gray-700 font-medium mb-2">Años de experiencia específica certificable en formación, mentoría o consultoría a emprendedores:</label>
                         <select id="experiencia_especifica" name="experiencia_especifica" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
@@ -157,7 +132,6 @@
                             <option value=">5">5 años o más (Cumple requisito Senior)</option>
                         </select>
                     </div>
-
                     <div class="mb-6">
                         <p class="block text-gray-700 font-medium mb-2">¿Tiene experiencia demostrable en el fortalecimiento de empresas de base tecnológica (Industria Digital)?</p>
                         <div>
@@ -165,7 +139,6 @@
                             <label class="inline-flex items-center"><input type="radio" name="experiencia_tecnologica" value="no" class="form-radio text-blue-600 h-5 w-5"><span class="ml-2">No</span></label>
                         </div>
                     </div>
-                    
                     <div class="mb-6">
                         <p class="block text-gray-700 font-medium mb-2">¿Ha aplicado o impartido talleres sobre metodologías como Lean Startup, Design Thinking, etc.?</p>
                         <div>
@@ -173,27 +146,31 @@
                             <label class="inline-flex items-center"><input type="radio" name="metodologias" value="no" class="form-radio text-blue-600 h-5 w-5"><span class="ml-2">No</span></label>
                         </div>
                     </div>
-
                     <div>
                         <label for="proyecto_relevante" class="block text-gray-700 font-medium mb-2">Describa brevemente un proyecto relevante donde haya aplicado dichas metodologías (Opcional)</label>
                         <textarea id="proyecto_relevante" name="proyecto_relevante" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Máximo 300 palabras..."></textarea>
                     </div>
                 </fieldset>
 
-                <!-- 5. Documento Adjunto -->
+                <!-- 5. Documento Adjunto (MODIFICADO) -->
                 <fieldset class="mb-8">
-                    <legend class="text-xl font-semibold text-gray-700 border-b-2 border-blue-200 pb-2 mb-6 w-full">5. Documento Adjunto</legend>
+                    <legend class="text-xl font-semibold text-gray-700 border-b-2 border-blue-200 pb-2 mb-6 w-full">5. Hoja de Vida / CV</legend>
+                    <div class="mb-2 p-4 bg-blue-50 border-l-4 border-blue-400 rounded-r-lg">
+                        <p class="text-sm text-blue-800">
+                            Por favor, suba su Hoja de Vida a un servicio como Google Drive, Dropbox o LinkedIn. Luego, pegue aquí el enlace para compartirlo.
+                            <br>
+                            <strong>Importante:</strong> Asegúrese de que el enlace sea público (ej. "Cualquier persona con el enlace puede ver").
+                        </p>
+                    </div>
                     <div class="mb-6">
-                        <label for="cv" class="block text-gray-700 font-medium mb-2">Hoja de Vida / CV</label>
-                        <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required>
-                        <p class="text-xs text-gray-500 mt-1">Formatos permitidos: PDF, DOC, DOCX. Tamaño máximo: 3MB.</p>
+                        <label for="url_cv" class="block text-gray-700 font-medium mb-2">Enlace a su Hoja de Vida / CV</label>
+                        <input type="url" id="url_cv" name="url_cv" placeholder="https://..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                     </div>
                 </fieldset>
 
-                <!-- 6. Verificación Final -->
+                <!-- 6. Verificación Final (sin cambios) -->
                 <fieldset>
                     <legend class="text-xl font-semibold text-gray-700 border-b-2 border-blue-200 pb-2 mb-6 w-full">6. Verificación Final</legend>
-                    
                     <div class="mb-6">
                         <label class="flex items-center">
                             <input type="checkbox" id="accept-policy" class="form-checkbox h-5 w-5 text-blue-600" required>
@@ -203,15 +180,12 @@
                             </span>
                         </label>
                     </div>
-
                     <div class="mb-6 p-4 bg-gray-50 rounded-lg border">
                         <label for="captcha" class="block text-gray-700 font-medium mb-2">Verificación de seguridad</label>
                         <div class="flex flex-col sm:flex-row items-center gap-4">
                             <span id="captcha-question" class="text-lg font-mono"></span>
                             <button type="button" id="captcha-refresh" class="p-2 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" title="Generar nueva operación">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M4 4l1.5 1.5A9 9 0 0120.5 11M20 20l-1.5-1.5A9 9 0 003.5 13"></path>
-                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M4 4l1.5 1.5A9 9 0 0120.5 11M20 20l-1.5-1.5A9 9 0 003.5 13"></path></svg>
                             </button>
                             <input type="number" id="captcha-input" name="captcha" class="w-full sm:w-32 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         </div>
@@ -219,8 +193,6 @@
                     </div>
                 </fieldset>
 
-
-                <!-- Botón de Envío -->
                 <div class="text-center mt-10">
                     <button type="submit" id="submitBtn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-colors duration-300 flex items-center justify-center mx-auto">
                         <span id="btnText">Enviar Inscripción</span>
@@ -229,7 +201,6 @@
                 </div>
             </form>
             
-            <!-- Mensaje de confirmación -->
             <div id="confirmationMessage" class="hidden text-center mt-8 p-6 bg-green-50 border-l-4 border-green-500 rounded-lg">
                 <h3 class="text-xl font-bold text-green-800">¡Inscripción Enviada!</h3>
                 <p class="text-green-700 mt-2">Hemos recibido su información correctamente. Gracias por su interés en el proyecto.</p>
@@ -298,11 +269,9 @@
             const captchaInput = document.getElementById('captcha-input');
             const captchaError = document.getElementById('captcha-error');
             const captchaRefreshBtn = document.getElementById('captcha-refresh');
-            const cvInput = document.getElementById('cv');
             
             let captchaCorrectAnswer = 0;
 
-            // --- Lógica de CAPTCHA y Cookies (sin cambios) ---
             function generateCaptcha() {
                 const operators = ['+', '-', '*'];
                 const operator = operators[Math.floor(Math.random() * operators.length)];
@@ -319,7 +288,6 @@
             if (localStorage.getItem('cookiesAccepted') !== 'true') { cookieBanner.classList.remove('hidden'); }
             acceptCookiesBtn.addEventListener('click', function() { cookieBanner.classList.add('hidden'); localStorage.setItem('cookiesAccepted', 'true'); });
 
-            // --- Lógica de Selects de Ubicación (sin cambios) ---
             for (const departamento in colombiaData) {
                 const option = document.createElement('option');
                 option.value = departamento;
@@ -341,11 +309,8 @@
                 }
             });
             
-            // --- INICIO DE LA NUEVA LÓGICA DE ENVÍO ---
             form.addEventListener('submit', async function(event) {
                 event.preventDefault();
-
-                // 1. Validaciones iniciales (CAPTCHA y validez del formulario)
                 const userCaptchaAnswer = parseInt(captchaInput.value, 10);
                 if (userCaptchaAnswer !== captchaCorrectAnswer) {
                     captchaError.classList.remove('hidden');
@@ -354,94 +319,38 @@
                 } else {
                     captchaError.classList.add('hidden');
                 }
-
                 if (!form.checkValidity()) {
                     form.reportValidity();
                     return;
                 }
-
-                // Deshabilitar botón y mostrar loader
                 submitBtn.disabled = true;
                 btnLoader.classList.remove('hidden');
-                
-                const file = cvInput.files[0];
-                let finalFileName = null;
-
-                // 2. Proceso de subida de archivo (si existe)
-                if (file) {
-                    btnText.textContent = 'Subiendo CV...';
-
-                    // --- PASO 2.1: Obtener la URL firmada del backend ---
-                    try {
-                        const urlResponse = await fetch('/api/generateUploadUrl', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ fileName: file.name, fileType: file.type }),
-                        });
-
-                        if (!urlResponse.ok) throw new Error('No se pudo obtener el permiso de subida.');
-                        
-                        const { uploadUrl, finalFileName: uniqueName } = await urlResponse.json();
-                        finalFileName = uniqueName; // Guardamos el nombre único para el paso final
-
-                        // --- PASO 2.2: Subir el archivo directamente a Firebase Storage ---
-                        const uploadResponse = await fetch(uploadUrl, {
-                            method: 'PUT',
-                            headers: { 'Content-Type': file.type },
-                            body: file,
-                        });
-
-                        if (!uploadResponse.ok) throw new Error('Error al subir el archivo CV.');
-
-                    } catch (error) {
-                        console.error('Error en el proceso de subida del archivo:', error);
-                        alert(`Error: ${error.message}`);
-                        // Reactivar el botón si la subida falla
-                        btnText.textContent = 'Enviar Inscripción';
-                        btnLoader.classList.add('hidden');
-                        submitBtn.disabled = false;
-                        return; // Detener el proceso
-                    }
-                }
-
-                // 3. Envío de los datos del formulario al backend
-                btnText.textContent = 'Guardando datos...';
+                btnText.textContent = 'Enviando...';
                 
                 try {
                     const formData = new FormData(form);
                     const data = Object.fromEntries(formData.entries());
                     
-                    // Añadimos la referencia al archivo subido (si existe)
-                    if (finalFileName) {
-                        data.nombre_cv_unico = finalFileName;
-                    }
-                    delete data.cv; // No necesitamos enviar el objeto de archivo
-
-                    const formResponse = await fetch('/api/enviarform', {
+                    const response = await fetch('/api/enviarform', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(data),
                     });
 
-                    if (!formResponse.ok) {
-                        const errorResult = await formResponse.json();
+                    if (!response.ok) {
+                        const errorResult = await response.json();
                         throw new Error(errorResult.error || 'El servidor rechazó los datos.');
                     }
-
-                    // 4. Éxito final
                     form.classList.add('hidden');
                     confirmationMessage.classList.remove('hidden');
-
                 } catch (error) {
                     console.error('Error al enviar los datos del formulario:', error);
                     alert(`Error: ${error.message}`);
-                    // Reactivar el botón si el envío final falla
                     btnText.textContent = 'Enviar Inscripción';
                     btnLoader.classList.add('hidden');
                     submitBtn.disabled = false;
                 }
             });
-
             captchaRefreshBtn.addEventListener('click', generateCaptcha);
             generateCaptcha();
         };
