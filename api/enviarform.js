@@ -1,18 +1,21 @@
 import { db } from '../lib/firebaseAdmin.js';
 
 export default async function handler(req, res) {
-  // --- INICIO DE LA CORRECCIÓN DE CORS ---
+  // Configuración de CORS para permitir peticiones desde el navegador
   res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Permite cualquier origen
+  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  );
 
+  // El navegador envía una petición OPTIONS preliminar para verificar CORS
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
   }
-  // --- FIN DE LA CORRECCIÓN DE CORS ---
-
+  
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST']);
     return res.status(405).json({ error: `Método ${req.method} no permitido.` });
@@ -21,10 +24,12 @@ export default async function handler(req, res) {
   try {
     const data = req.body;
     
-    if (!data.nombres || !data.apellidos || !data.numero_documento || !data.email || !data.telefono) {
-      return res.status(400).json({ error: 'Faltan campos obligatorios en la información personal.' });
+    // Validación de campos esenciales en el servidor
+    if (!data.nombres || !data.apellidos || !data.numero_documento || !data.email || !data.telefono || !data.url_cv) {
+      return res.status(400).json({ error: 'Faltan campos obligatorios. Por favor, revise el formulario.' });
     }
 
+    // Objeto que se guardará en Firestore, adaptado al formulario de contingencia
     const nuevoTallerista = {
       nombres: data.nombres || '',
       apellidos: data.apellidos || '',
@@ -43,7 +48,8 @@ export default async function handler(req, res) {
       experiencia_tecnologica: data.experiencia_tecnologica || '',
       metodologias: data.metodologias || '',
       proyecto_relevante: data.proyecto_relevante || '',
-      url_cv: data.nombre_cv_unico ? `https://storage.googleapis.com/talleristas-a5319.appspot.com/cvs/${data.nombre_cv_unico}` : '',
+      // Se guarda el enlace al CV directamente
+      url_cv: data.url_cv || '',
       fechaDeRegistro: new Date(),
     };
 
@@ -55,4 +61,3 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Ocurrió un error en el servidor al guardar los datos.' });
   }
 }
-
