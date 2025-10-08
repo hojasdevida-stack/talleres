@@ -23,26 +23,6 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        /* Estilos para la barra de progreso */
-        .progress-bar-container {
-            display: none; /* Oculto por defecto */
-            height: 20px;
-            width: 100%;
-            background-color: #f3f3f3;
-            border-radius: 10px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background-color: #4caf50;
-            border-radius: 10px;
-            text-align: center;
-            line-height: 20px;
-            color: white;
-            transition: width 0.4s ease;
-        }
     </style>
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
@@ -79,6 +59,7 @@
                             <label for="tipo_documento" class="block text-gray-700 font-medium mb-2">Tipo de Documento</label>
                             <select id="tipo_documento" name="tipo_documento" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option>Cédula de Ciudadanía</option>
+                                <option>Cédula de Extranjería</option>
                             </select>
                         </div>
                         <div>
@@ -122,19 +103,19 @@
                 <!-- 3. Perfil Profesional -->
                 <fieldset class="mb-8">
                     <legend class="text-xl font-semibold text-gray-700 border-b-2 border-blue-200 pb-2 mb-6 w-full">3. Perfil Profesional</legend>
-                     <div class="mb-6">
-                        <label class="block text-gray-700 font-medium mb-2">Perfil al que aplica</label>
-                        <div class="flex flex-col sm:flex-row sm:space-x-6">
-                            <label class="inline-flex items-center mb-2 sm:mb-0">
-                                <input type="radio" name="perfil" value="Senior" class="form-radio text-blue-600 h-5 w-5" required>
-                                <span class="ml-2 text-gray-700">Mentor / Tallerista Senior</span>
-                            </label>
-                            <label class="inline-flex items-center">
-                                <input type="radio" name="perfil" value="Junior" class="form-radio text-blue-600 h-5 w-5" required>
-                                <span class="ml-2 text-gray-700">Mentor / Tallerista Junior</span>
-                            </label>
+                       <div class="mb-6">
+                            <label class="block text-gray-700 font-medium mb-2">Perfil al que aplica</label>
+                            <div class="flex flex-col sm:flex-row sm:space-x-6">
+                                <label class="inline-flex items-center mb-2 sm:mb-0">
+                                    <input type="radio" name="perfil" value="Senior" class="form-radio text-blue-600 h-5 w-5" required>
+                                    <span class="ml-2 text-gray-700">Mentor / Tallerista Senior</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="perfil" value="Junior" class="form-radio text-blue-600 h-5 w-5" required>
+                                    <span class="ml-2 text-gray-700">Mentor / Tallerista Junior</span>
+                                </label>
+                            </div>
                         </div>
-                    </div>
                 </fieldset>
 
                 <!-- 4. Preguntas de Validación -->
@@ -156,7 +137,7 @@
                             <label class="inline-flex items-center"><input type="radio" name="posgrado" value="no" class="form-radio text-blue-600 h-5 w-5"><span class="ml-2">No</span></label>
                         </div>
                     </div>
-                    
+                        
                     <div class="mb-6">
                         <label for="experiencia_general" class="block text-gray-700 font-medium mb-2">Años de experiencia profesional general certificable:</label>
                         <select id="experiencia_general" name="experiencia_general" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
@@ -170,7 +151,7 @@
                     <div class="mb-6">
                         <label for="experiencia_especifica" class="block text-gray-700 font-medium mb-2">Años de experiencia específica certificable en formación, mentoría o consultoría a emprendedores:</label>
                         <select id="experiencia_especifica" name="experiencia_especifica" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                             <option value="">Seleccione una opción...</option>
+                                <option value="">Seleccione una opción...</option>
                             <option value="<2">Menos de 2 años</option>
                             <option value="2-4">Entre 2 y 4 años (Cumple requisito Junior)</option>
                             <option value=">5">5 años o más (Cumple requisito Senior)</option>
@@ -205,12 +186,7 @@
                     <div class="mb-6">
                         <label for="cv" class="block text-gray-700 font-medium mb-2">Hoja de Vida / CV</label>
                         <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required>
-                        <p class="text-xs text-gray-500 mt-1">Formatos permitidos: PDF, DOC, DOCX. Tamaño máximo: 5MB.</p>
-                        <!-- Contenedor para la barra de progreso -->
-                        <div id="progressBarContainer" class="progress-bar-container">
-                            <div id="progressBar" class="progress-bar">0%</div>
-                        </div>
-                         <p id="uploadStatus" class="text-sm text-gray-600 mt-2"></p>
+                        <p class="text-xs text-gray-500 mt-1">Formatos permitidos: PDF, DOC, DOCX. Tamaño máximo: 3MB.</p>
                     </div>
                 </fieldset>
 
@@ -292,7 +268,7 @@
             "Guaviare": ["Calamar", "El Retorno", "Miraflores", "San José del Guaviare"],
             "Huila": ["Acevedo", "Agrado", "Aipe", "Algeciras", "Altamira", "Baraya", "Campoalegre", "Colombia", "Elías", "Garzón", "Gigante", "Guadalupe", "Hobo", "Íquira", "Isnos", "La Argentina", "La Plata", "Nátaga", "Neiva", "Oporapa", "Paicol", "Palermo", "Palestina", "Pital", "Pitalito", "Rivera", "Saladoblanco", "San Agustín", "Santa María", "Suaza", "Tarqui", "Tello", "Teruel", "Tesalia", "Timaná", "Villavieja", "Yaguará"],
             "La Guajira": ["Albania", "Barrancas", "Dibulla", "Distracción", "El Molino", "Fonseca", "Hatonuevo", "La Jagua del Pilar", "Maicao", "Manaure", "Riohacha", "San Juan del Cesar", "Uribia", "Urumita", "Villanueva"],
-            "Magdalena": ["Algarrobo", "Aracataca", "Ariguaní", "Cerro de San Antonio", "Chibolo", "Ciénaga", "Concordia", "El Banco", "El Piñón", "El Retén", "Fundación", "Guamal", "Nueva Granada", "Pedraza", "Pijiño del Carmen", "Pivijay", "Plato", "Pueblovieje", "Remolino", "Sabanas de San Ángel", "Salamina", "San Sebastián de Buenavista", "San Zenón", "Santa Ana", "Santa Bárbara de Pinto", "Santa Marta", "Sitionuevo", "Tenerife", "Zapayán", "Zona Bananera"],
+            "Magdalena": ["Algarrobo", "Aracataca", "Ariguaní", "Cerro de San Antonio", "Chibolo", "Ciénaga", "Concordia", "El Banco", "El Piñón", "El Retén", "Fundación", "Guamal", "Nueva Granada", "Pedraza", "Pijiño del Carmen", "Pivijay", "Plato", "Puebloviejo", "Remolino", "Sabanas de San Ángel", "Salamina", "San Sebastián de Buenavista", "San Zenón", "Santa Ana", "Santa Bárbara de Pinto", "Santa Marta", "Sitionuevo", "Tenerife", "Zapayán", "Zona Bananera"],
             "Meta": ["Acacías", "Barranca de Upía", "Cabuyaro", "Castilla la Nueva", "Cubarral", "Cumaral", "El Calvario", "El Castillo", "El Dorado", "Fuente de Oro", "Granada", "Guamal", "La Macarena", "Lejanías", "Mapiripán", "Mesetas", "Puerto Concordia", "Puerto Gaitán", "Puerto Lleras", "Puerto López", "Puerto Rico", "Restrepo", "San Carlos de Guaroa", "San Juan de Arama", "San Juanito", "San Martín", "Uribe", "Villavicencio", "Vista Hermosa"],
             "Nariño": ["Aldana", "Ancuyá", "Arboleda", "Barbacoas", "Belén", "Buesaco", "Chachagüí", "Colón", "Consacá", "Contadero", "Córdoba", "Cuaspud", "Cumbal", "Cumbitara", "El Charco", "El Peñol", "El Rosario", "El Tablón de Gómez", "El Tambo", "Francisco Pizarro", "Funes", "Guachucal", "Guaitarilla", "Gualmatán", "Iles", "Imués", "Ipiales", "La Cruz", "La Florida", "La Llanada", "La Tola", "La Unión", "Leiva", "Linares", "Los Andes", "Magüí Payán", "Mallama", "Mosquera", "Nariño", "Olaya Herrera", "Ospina", "Pasto", "Policarpa", "Potosí", "Providencia", "Puerres", "Pupiales", "Ricaurte", "Roberto Payán", "Samaniego", "San Bernardo", "San Lorenzo", "San Pablo", "San Pedro de Cartago", "Sandoná", "Santa Bárbara", "Santacruz", "Sapuyes", "Taminango", "Tangua", "Tumaco", "Túquerres", "Yacuanquer"],
             "Norte de Santander": ["Ábrego", "Arboledas", "Bochalema", "Bucarasica", "Cáchira", "Cácota", "Chinácota", "Chitagá", "Convención", "Cúcuta", "Cucutilla", "Duranía", "El Carmen", "El Tarra", "El Zulia", "Gramalote", "Hacarí", "Herrán", "La Esperanza", "La Playa de Belén", "Labateca", "Los Patios", "Lourdes", "Mutiscua", "Ocaña", "Pamplona", "Pamplonita", "Puerto Santander", "Ragonvalia", "Salazar de Las Palmas", "San Calixto", "San Cayetano", "Santiago", "Sardinata", "Silos", "Teorama", "Tibú", "Toledo", "Villa Caro", "Villa del Rosario"],
@@ -323,91 +299,53 @@
             const captchaError = document.getElementById('captcha-error');
             const captchaRefreshBtn = document.getElementById('captcha-refresh');
             const cvInput = document.getElementById('cv');
-            const progressBarContainer = document.getElementById('progressBarContainer');
-            const progressBar = document.getElementById('progressBar');
-            const uploadStatus = document.getElementById('uploadStatus');
-
+            
             let captchaCorrectAnswer = 0;
 
-            // ... (resto del código de captcha, cookies, departamentos)
-            // Lógica para el CAPTCHA
+            // --- Lógica de CAPTCHA y Cookies (sin cambios) ---
             function generateCaptcha() {
                 const operators = ['+', '-', '*'];
                 const operator = operators[Math.floor(Math.random() * operators.length)];
                 let num1, num2;
-
                 switch (operator) {
-                    case '+':
-                        num1 = Math.floor(Math.random() * 10) + 1;
-                        num2 = Math.floor(Math.random() * 10) + 1;
-                        captchaCorrectAnswer = num1 + num2;
-                        break;
-                    case '-':
-                        num1 = Math.floor(Math.random() * 10) + 5;
-                        num2 = Math.floor(Math.random() * num1) + 1;
-                        captchaCorrectAnswer = num1 - num2;
-                        break;
-                    case '*':
-                        num1 = Math.floor(Math.random() * 8) + 2;
-                        num2 = Math.floor(Math.random() * 8) + 2;
-                        captchaCorrectAnswer = num1 * num2;
-                        break;
+                    case '+': num1 = Math.floor(Math.random() * 10) + 1; num2 = Math.floor(Math.random() * 10) + 1; captchaCorrectAnswer = num1 + num2; break;
+                    case '-': num1 = Math.floor(Math.random() * 10) + 5; num2 = Math.floor(Math.random() * num1) + 1; captchaCorrectAnswer = num1 - num2; break;
+                    case '*': num1 = Math.floor(Math.random() * 8) + 2; num2 = Math.floor(Math.random() * 8) + 2; captchaCorrectAnswer = num1 * num2; break;
                 }
-                
                 captchaQuestionSpan.textContent = `Resuelva: ${num1} ${operator} ${num2} =`;
                 captchaInput.value = '';
                 captchaError.classList.add('hidden');
             }
+            if (localStorage.getItem('cookiesAccepted') !== 'true') { cookieBanner.classList.remove('hidden'); }
+            acceptCookiesBtn.addEventListener('click', function() { cookieBanner.classList.add('hidden'); localStorage.setItem('cookiesAccepted', 'true'); });
 
-            // Lógica para el banner de cookies
-            if (localStorage.getItem('cookiesAccepted') !== 'true') {
-                cookieBanner.classList.remove('hidden');
-            }
-
-            acceptCookiesBtn.addEventListener('click', function() {
-                cookieBanner.classList.add('hidden');
-                localStorage.setItem('cookiesAccepted', 'true');
-            });
-
-            // Poblar el selector de departamentos
+            // --- Lógica de Selects de Ubicación (sin cambios) ---
             for (const departamento in colombiaData) {
                 const option = document.createElement('option');
                 option.value = departamento;
                 option.textContent = departamento;
                 departamentoSelect.appendChild(option);
             }
-
-            // Evento para cambio en el selector de departamentos
             departamentoSelect.addEventListener('change', function() {
                 municipioSelect.innerHTML = '<option value="">Seleccione un municipio...</option>';
                 municipioSelect.disabled = true;
-
                 const selectedDepartamento = this.value;
-                if (selectedDepartamento) {
-                    const municipios = colombiaData[selectedDepartamento];
-                    if (municipios) {
-                        municipios.forEach(function(municipio) {
-                            const option = document.createElement('option');
-                            option.value = municipio;
-                            option.textContent = municipio;
-                            municipioSelect.appendChild(option);
-                        });
-                        municipioSelect.disabled = false;
-                    }
+                if (selectedDepartamento && colombiaData[selectedDepartamento]) {
+                    colombiaData[selectedDepartamento].forEach(function(municipio) {
+                        const option = document.createElement('option');
+                        option.value = municipio;
+                        option.textContent = municipio;
+                        municipioSelect.appendChild(option);
+                    });
+                    municipioSelect.disabled = false;
                 }
             });
             
-            // Asignar evento al botón de refrescar CAPTCHA
-            captchaRefreshBtn.addEventListener('click', generateCaptcha);
-
-            // Generar el primer CAPTCHA al cargar la página
-            generateCaptcha();
-
             // --- INICIO DE LA NUEVA LÓGICA DE ENVÍO ---
             form.addEventListener('submit', async function(event) {
                 event.preventDefault();
 
-                // 1. Validaciones iniciales (Formulario y CAPTCHA)
+                // 1. Validaciones iniciales (CAPTCHA y validez del formulario)
                 const userCaptchaAnswer = parseInt(captchaInput.value, 10);
                 if (userCaptchaAnswer !== captchaCorrectAnswer) {
                     captchaError.classList.remove('hidden');
@@ -423,99 +361,89 @@
                 }
 
                 // Deshabilitar botón y mostrar loader
-                btnText.textContent = 'Enviando...';
-                btnLoader.classList.remove('hidden');
                 submitBtn.disabled = true;
+                btnLoader.classList.remove('hidden');
                 
+                const file = cvInput.files[0];
                 let finalFileName = null;
-                const cvFile = cvInput.files[0];
 
-                // --- 2. Proceso de Carga del Archivo (si existe) ---
-                if (cvFile) {
+                // 2. Proceso de subida de archivo (si existe)
+                if (file) {
+                    btnText.textContent = 'Subiendo CV...';
+
+                    // --- PASO 2.1: Obtener la URL firmada del backend ---
                     try {
-                        uploadStatus.textContent = 'Obteniendo permiso para subir CV...';
-                        
-                        // 2.1. Pedir la URL firmada al backend
                         const urlResponse = await fetch('/api/generateUploadUrl', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                fileName: cvFile.name,
-                                fileType: cvFile.type
-                            })
+                            body: JSON.stringify({ fileName: file.name, fileType: file.type }),
                         });
 
                         if (!urlResponse.ok) throw new Error('No se pudo obtener el permiso de subida.');
-
+                        
                         const { uploadUrl, finalFileName: uniqueName } = await urlResponse.json();
-                        finalFileName = uniqueName; // Guardamos el nombre único para enviarlo con el formulario
+                        finalFileName = uniqueName; // Guardamos el nombre único para el paso final
 
-                        // 2.2. Subir el archivo directamente a Firebase Storage
-                        uploadStatus.textContent = 'Subiendo CV...';
-                        progressBarContainer.style.display = 'block';
-
+                        // --- PASO 2.2: Subir el archivo directamente a Firebase Storage ---
                         const uploadResponse = await fetch(uploadUrl, {
                             method: 'PUT',
-                            headers: { 'Content-Type': cvFile.type },
-                            body: cvFile
+                            headers: { 'Content-Type': file.type },
+                            body: file,
                         });
-                        
-                        // Simulación de progreso (fetch no provee progreso real)
-                        progressBar.style.width = '50%';
-                        progressBar.textContent = '50%';
-                        
-                        if (!uploadResponse.ok) throw new Error('La subida del CV falló.');
-                        
-                        progressBar.style.width = '100%';
-                        progressBar.textContent = '100%';
-                        uploadStatus.textContent = 'CV subido con éxito.';
+
+                        if (!uploadResponse.ok) throw new Error('Error al subir el archivo CV.');
 
                     } catch (error) {
-                        console.error('Error durante la subida del archivo:', error);
-                        alert(`Error al subir el CV: ${error.message}`);
+                        console.error('Error en el proceso de subida del archivo:', error);
+                        alert(`Error: ${error.message}`);
                         // Reactivar el botón si la subida falla
                         btnText.textContent = 'Enviar Inscripción';
                         btnLoader.classList.add('hidden');
                         submitBtn.disabled = false;
-                        uploadStatus.textContent = 'La subida del archivo falló. Intente de nuevo.';
-                        progressBarContainer.style.display = 'none';
-                        return; // Detener todo el proceso
+                        return; // Detener el proceso
                     }
                 }
 
-                // --- 3. Envío de los Datos del Formulario ---
+                // 3. Envío de los datos del formulario al backend
+                btnText.textContent = 'Guardando datos...';
+                
                 try {
-                    uploadStatus.textContent = 'Guardando información del formulario...';
                     const formData = new FormData(form);
                     const data = Object.fromEntries(formData.entries());
                     
-                    // Añadimos el nombre del archivo subido a los datos
-                    data.nombre_cv_unico = finalFileName;
-                    delete data.cv; // No necesitamos enviar el campo de archivo original
+                    // Añadimos la referencia al archivo subido (si existe)
+                    if (finalFileName) {
+                        data.nombre_cv_unico = finalFileName;
+                    }
+                    delete data.cv; // No necesitamos enviar el objeto de archivo
 
                     const formResponse = await fetch('/api/enviarform', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
+                        body: JSON.stringify(data),
                     });
 
-                    if (formResponse.ok) {
-                        form.classList.add('hidden');
-                        confirmationMessage.classList.remove('hidden');
-                    } else {
+                    if (!formResponse.ok) {
                         const errorResult = await formResponse.json();
-                        throw new Error(errorResult.error || 'Error desconocido al guardar los datos.');
+                        throw new Error(errorResult.error || 'El servidor rechazó los datos.');
                     }
+
+                    // 4. Éxito final
+                    form.classList.add('hidden');
+                    confirmationMessage.classList.remove('hidden');
+
                 } catch (error) {
-                    console.error('Error al enviar el formulario:', error);
-                    alert(`Ocurrió un error final: ${error.message}`);
+                    console.error('Error al enviar los datos del formulario:', error);
+                    alert(`Error: ${error.message}`);
                     // Reactivar el botón si el envío final falla
                     btnText.textContent = 'Enviar Inscripción';
                     btnLoader.classList.add('hidden');
                     submitBtn.disabled = false;
-                    uploadStatus.textContent = 'No se pudo guardar la información. Intente de nuevo.';
                 }
             });
+
+            captchaRefreshBtn.addEventListener('click', generateCaptcha);
+            generateCaptcha();
         };
     </script>
 
