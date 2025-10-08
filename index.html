@@ -102,19 +102,19 @@
                 <!-- 3. Perfil Profesional -->
                 <fieldset class="mb-8">
                     <legend class="text-xl font-semibold text-gray-700 border-b-2 border-blue-200 pb-2 mb-6 w-full">3. Perfil Profesional</legend>
-                     <div class="mb-6">
-                        <label class="block text-gray-700 font-medium mb-2">Perfil al que aplica</label>
-                        <div class="flex flex-col sm:flex-row sm:space-x-6">
-                            <label class="inline-flex items-center mb-2 sm:mb-0">
-                                <input type="radio" name="perfil" value="Senior" class="form-radio text-blue-600 h-5 w-5" required>
-                                <span class="ml-2 text-gray-700">Mentor / Tallerista Senior</span>
-                            </label>
-                            <label class="inline-flex items-center">
-                                <input type="radio" name="perfil" value="Junior" class="form-radio text-blue-600 h-5 w-5" required>
-                                <span class="ml-2 text-gray-700">Mentor / Tallerista Junior</span>
-                            </label>
+                       <div class="mb-6">
+                            <label class="block text-gray-700 font-medium mb-2">Perfil al que aplica</label>
+                            <div class="flex flex-col sm:flex-row sm:space-x-6">
+                                <label class="inline-flex items-center mb-2 sm:mb-0">
+                                    <input type="radio" name="perfil" value="Senior" class="form-radio text-blue-600 h-5 w-5" required>
+                                    <span class="ml-2 text-gray-700">Mentor / Tallerista Senior</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="perfil" value="Junior" class="form-radio text-blue-600 h-5 w-5" required>
+                                    <span class="ml-2 text-gray-700">Mentor / Tallerista Junior</span>
+                                </label>
+                            </div>
                         </div>
-                    </div>
                 </fieldset>
 
                 <!-- 4. Preguntas de Validación -->
@@ -136,7 +136,7 @@
                             <label class="inline-flex items-center"><input type="radio" name="posgrado" value="no" class="form-radio text-blue-600 h-5 w-5"><span class="ml-2">No</span></label>
                         </div>
                     </div>
-                     
+                        
                     <div class="mb-6">
                         <label for="experiencia_general" class="block text-gray-700 font-medium mb-2">Años de experiencia profesional general certificable:</label>
                         <select id="experiencia_general" name="experiencia_general" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
@@ -195,7 +195,7 @@
                     
                     <div class="mb-6">
                         <label class="flex items-center">
-                            <input type="checkbox" id="accept-policy" class="form-checkbox h-5 w-5 text-blue-600" required>
+                            <input type="checkbox" id="accept-policy" name="accept_policy" class="form-checkbox h-5 w-5 text-blue-600" required>
                             <span class="ml-3 text-gray-700">
                                 He leído y acepto la 
                                 <a href="https://fundacionidi.edu.co/politica-de-tratamiento-de-datos/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-medium">política de tratamiento de datos</a>.
@@ -303,32 +303,12 @@
 
             // Lógica para el CAPTCHA
             function generateCaptcha() {
-                const operators = ['+', '-', '*'];
-                const operator = operators[Math.floor(Math.random() * operators.length)];
-                let num1, num2;
-
-                switch (operator) {
-                    case '+':
-                        num1 = Math.floor(Math.random() * 10) + 1; // 1-10
-                        num2 = Math.floor(Math.random() * 10) + 1; // 1-10
-                        captchaCorrectAnswer = num1 + num2;
-                        break;
-                    case '-':
-                        // Asegurar que el resultado no sea negativo para simplicidad
-                        num1 = Math.floor(Math.random() * 10) + 5; // 5-14
-                        num2 = Math.floor(Math.random() * num1) + 1; // 1 hasta num1
-                        captchaCorrectAnswer = num1 - num2;
-                        break;
-                    case '*':
-                        num1 = Math.floor(Math.random() * 8) + 2; // 2-9
-                        num2 = Math.floor(Math.random() * 8) + 2; // 2-9
-                        captchaCorrectAnswer = num1 * num2;
-                        break;
-                }
-                
-                captchaQuestionSpan.textContent = `Resuelva: ${num1} ${operator} ${num2} =`;
+                const num1 = Math.floor(Math.random() * 10) + 1;
+                const num2 = Math.floor(Math.random() * 10) + 1;
+                captchaCorrectAnswer = num1 + num2;
+                captchaQuestionSpan.textContent = `Resuelva: ${num1} + ${num2} =`;
                 captchaInput.value = '';
-                captchaError.classList.add('hidden'); // Ocultar error al refrescar
+                captchaError.classList.add('hidden');
             }
 
             // Lógica para el banner de cookies
@@ -352,7 +332,6 @@
 
             // Evento para cambio en el selector de departamentos
             departamentoSelect.addEventListener('change', function() {
-                // Limpiar y deshabilitar selector de municipios
                 municipioSelect.innerHTML = '<option value="">Seleccione un municipio...</option>';
                 municipioSelect.disabled = true;
 
@@ -371,39 +350,63 @@
                 }
             });
             
-            // Manejo del envío del formulario
-            form.addEventListener('submit', function(event) {
+            // --- INICIO: CÓDIGO DE ENVÍO ACTUALIZADO ---
+            form.addEventListener('submit', async function(event) {
                 event.preventDefault();
 
                 // Validar CAPTCHA
                 const userCaptchaAnswer = parseInt(captchaInput.value, 10);
                 if (userCaptchaAnswer !== captchaCorrectAnswer) {
                     captchaError.classList.remove('hidden');
-                    generateCaptcha(); // Generar nueva pregunta
-                    return; // Detener el envío
+                    generateCaptcha();
+                    return;
                 } else {
                      captchaError.classList.add('hidden');
                 }
 
                 if (form.checkValidity()) {
-                    // Mostrar loader y deshabilitar botón
                     btnText.textContent = 'Enviando...';
                     btnLoader.classList.remove('hidden');
                     submitBtn.disabled = true;
 
-                    // Simular un envío de red
-                    setTimeout(() => {
-                        // Ocultar el formulario
-                        form.classList.add('hidden');
-                        // Mostrar mensaje de confirmación
-                        confirmationMessage.classList.remove('hidden');
-                    }, 2000);
+                    // Usamos FormData para recolectar todos los campos, incluido el nombre del archivo.
+                    const formData = new FormData(form);
+                    // Convertimos FormData a un objeto simple para enviarlo como JSON.
+                    const data = Object.fromEntries(formData.entries());
+                    // El campo 'cv' ahora contiene solo el nombre del archivo, no el archivo en sí.
+                    data.cv = document.getElementById('cv').files[0]?.name || "No adjuntado";
+
+
+                    try {
+                        const response = await fetch('/api/enviarform', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data),
+                        });
+
+                        if (response.ok) {
+                            form.classList.add('hidden');
+                            confirmationMessage.classList.remove('hidden');
+                        } else {
+                            const errorResult = await response.json();
+                            alert(`Error al enviar: ${errorResult.error || 'Ocurrió un problema en el servidor.'}`);
+                            btnText.textContent = 'Enviar Inscripción';
+                            btnLoader.classList.add('hidden');
+                            submitBtn.disabled = false;
+                        }
+                    } catch (error) {
+                        console.error('Error de conexión:', error);
+                        alert('No se pudo conectar con el servidor. Por favor, revise su conexión a internet.');
+                        btnText.textContent = 'Enviar Inscripción';
+                        btnLoader.classList.add('hidden');
+                        submitBtn.disabled = false;
+                    }
 
                 } else {
-                    // Si el formulario no es válido, mostrar mensajes de error nativos del navegador
                     form.reportValidity();
                 }
             });
+            // --- FIN: CÓDIGO DE ENVÍO ACTUALIZADO ---
 
             // Asignar evento al botón de refrescar CAPTCHA
             captchaRefreshBtn.addEventListener('click', generateCaptcha);
