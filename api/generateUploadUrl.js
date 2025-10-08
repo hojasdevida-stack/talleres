@@ -1,9 +1,22 @@
-// /api/generateUploadUrl.js
-
 import { bucket } from '../lib/firebaseAdmin.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function handler(req, res) {
+  // --- INICIO DE LA CORRECCIÓN DE CORS ---
+  // Estas cabeceras le dan permiso al navegador para comunicarse con la API desde cualquier origen.
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Permite cualquier dominio
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // El navegador envía una petición "previa" (preflight) de tipo OPTIONS para verificar los permisos.
+  // Respondemos afirmativamente a esta petición.
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+  // --- FIN DE LA CORRECCIÓN DE CORS ---
+
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST']);
     return res.status(405).json({ error: `Método ${req.method} no permitido.` });
@@ -11,34 +24,29 @@ export default async function handler(req, res) {
 
   try {
     const { fileName, fileType } = req.body;
-
     if (!fileName || !fileType) {
-      return res.status(400).json({ error: 'El nombre y el tipo de archivo son requeridos.' });
+      return res.status(400).json({ error: 'Faltan el nombre o el tipo de archivo.' });
     }
 
-    // 1. Generar un nombre de archivo único para evitar colisiones.
-    const uniqueId = uuidv4();
     const fileExtension = fileName.split('.').pop();
-    const finalFileName = `${uniqueId}.${fileExtension}`;
-    const filePath = `cvs/${finalFileName}`; // Guardaremos los CVs en una carpeta 'cvs'
+    const uniqueFileName = `${uuidv4()}.${fileExtension}`;
+    const filePath = `cvs/${uniqueFileName}`;
 
-    // 2. Configurar las opciones para la URL firmada.
+    const file = bucket.file(filePath);
     const options = {
       version: 'v4',
-      action: 'write', // 'write' significa que es para subir/escribir un archivo.
-      expires: Date.now() + 15 * 60 * 1000, // La URL expira en 15 minutos.
+      action: 'write',
+      expires: Date.now() + 15 * 60 * 1000, // 15 minutos de validez
       contentType: fileType,
     };
 
-    // 3. Generar la URL firmada.
-    const [uploadUrl] = await bucket.file(filePath).getSignedUrl(options);
+    const [uploadUrl] = await file.getSignedUrl(options);
 
-    // 4. Devolver la URL y el nombre final al frontend.
-    res.status(200).json({ uploadUrl, finalFileName });
+    res.status(200).json({ uploadUrl, finalFileName: uniqueFileName });
 
   } catch (error) {
-    console.error('Error al generar la URL de subida:', error);
-    res.status(500).json({ error: 'No se pudo generar el enlace para subir el archivo.' });
+    console.error('Error al generar la URL firmada:', error);
+    res.status(500).json({ error: 'No se pudo generar el permiso de subida.' });
   }
 }
 
