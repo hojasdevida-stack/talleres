@@ -1,10 +1,10 @@
 // /api/enviarform.js
 
-// Se utiliza require (CommonJS) en lugar de import (ESM).
-const { db } = require('../lib/firebaseAdmin.js');
+// Usamos import (ESM) y nos aseguramos de incluir la extensión .js en la ruta.
+import { db } from '../lib/firebaseAdmin.js';
 
-// Se utiliza module.exports para definir la función del handler.
-module.exports = async (req, res) => {
+// Usamos 'export default' para la función del handler, el estándar en Vercel para ESM.
+export default async function handler(req, res) {
   // 1. Aseguramos que solo se acepten peticiones POST
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST']);
