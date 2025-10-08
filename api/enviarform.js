@@ -1,9 +1,10 @@
 // /api/enviarform.js
 
-// CORRECCIÓN: Se añade la extensión .js al final de la ruta de importación.
-import { db } from '../lib/firebaseAdmin.js';
+// Se utiliza require (CommonJS) en lugar de import (ESM).
+const { db } = require('../lib/firebaseAdmin.js');
 
-export default async function handler(req, res) {
+// Se utiliza module.exports para definir la función del handler.
+module.exports = async (req, res) => {
   // 1. Aseguramos que solo se acepten peticiones POST
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST']);
@@ -75,5 +76,5 @@ export default async function handler(req, res) {
     console.error('Error crítico al guardar en Firestore:', error);
     return res.status(500).json({ error: 'Ocurrió un error en el servidor. Por favor, contacte al administrador.' });
   }
-}
+};
 
